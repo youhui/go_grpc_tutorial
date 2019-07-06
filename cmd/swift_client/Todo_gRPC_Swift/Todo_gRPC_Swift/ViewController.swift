@@ -12,7 +12,7 @@ import SwiftProtobuf
 
 class ViewController: UIViewController {
     
-    private let client = V1_ToDoServiceServiceClient(address: "localhost:9090", secure: false)
+    private let client = V1_ToDoServiceServiceClient(address: "118.24.221.221:9090", secure: false)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,33 +33,32 @@ class ViewController: UIViewController {
     }
 
     func requestTodoList() {
-//        var req = V1_ReadAllRequest()
-//        req.api = "v1"
-//        let data = Metadata()
-//        _ = try? client.readAll(req, completion: { (rsp, result) in
-//            if result.statusCode == .ok {
-//                print(rsp as Any)
-//            }
-//        })
-//
-  
-        
-        let timeStr = "\(Date())"
-        var t = V1_ToDo()
-        t.title = "title \(timeStr)"
-        t.description_p = "Created \(timeStr)"
-        let timeStamp = Int64(Date().timeIntervalSince1970)
-        t.reminder = Google_Protobuf_Timestamp(seconds: timeStamp, nanos: 0)
-        
-        var req = V1_CreateRequest()
+        var req = V1_ReadAllRequest()
         req.api = "v1"
-        req.toDo = t
-        
-        _ = try? client.create(req, completion: { (rsp, result) in
+        _ = try? client.readAll(req, completion: { (rsp, result) in
             if result.statusCode == .ok {
                 print(rsp as Any)
             }
         })
+
+  
+        
+//        let timeStr = "\(Date())"
+//        var t = V1_ToDo()
+//        t.title = "title \(timeStr)"
+//        t.description_p = "Created \(timeStr)"
+//        let timeStamp = Int64(Date().timeIntervalSince1970)
+//        t.reminder = Google_Protobuf_Timestamp(seconds: timeStamp, nanos: 0)
+//
+//        var req = V1_CreateRequest()
+//        req.api = "v1"
+//        req.toDo = t
+//
+//        _ = try? client.create(req, completion: { (rsp, result) in
+//            if result.statusCode == .ok {
+//                print(rsp as Any)
+//            }
+//        })
     }
 }
 
